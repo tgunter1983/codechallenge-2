@@ -1,0 +1,9 @@
+output "subnet_ids" {
+  description = "Subnets used for ECS"
+  value       = data.aws_subnets.default_vpc_subnets.ids
+}
+
+output "security_group_id" {
+  description = "Security group for ECS"
+  value       = aws_security_group.ecs_sg.id
+}
