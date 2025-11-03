@@ -82,3 +82,16 @@ output "service_name" {
   description = "ECS Service name"
   value       = aws_ecs_service.hello_service.name
 }
+# -- Export ECS Task Definition JSON --
+resource "local_file" "ecs_task_def_json" {
+  filename = "${path.module}/../../.aws/task-definition.json"
+  content  = jsonencode({
+    family                   = aws_ecs_task_definition.hello_task.family
+    networkMode              = aws_ecs_task_definition.hello_task.network_mode
+    requiresCompatibilities  = aws_ecs_task_definition.hello_task.requires_compatibilities
+    cpu                      = aws_ecs_task_definition.hello_task.cpu
+    memory                   = aws_ecs_task_definition.hello_task.memory
+    executionRoleArn         = aws_ecs_task_definition.hello_task.execution_role_arn
+    containerDefinitions     = jsondecode(aws_ecs_task_definition.hello_task.container_definitions)
+  })
+}
