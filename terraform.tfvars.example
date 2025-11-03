@@ -1,0 +1,4 @@
+# terraform.tfvars.example
+project_name = "hello"
+aws_region   = "us-east-1"
+alarm_email  = "your-email@example.com"
