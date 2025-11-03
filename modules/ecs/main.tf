@@ -1,9 +1,14 @@
-# --- ECS Cluster ---
+# -- ECS Cluster --
 resource "aws_ecs_cluster" "hello_cluster" {
   name = "${var.project_name}-cluster"
+  
+  tags = {
+    Name        = "hello-world-bucket"
+    Environment = "demo"
+  }
 }
 
-# --- IAM Role for ECS Task ---
+# -- IAM Role for ECS Task --
 resource "aws_iam_role" "ecs_task_exec" {
   name = "${var.project_name}-ecsTaskExecutionRole"
   assume_role_policy = jsonencode({
@@ -25,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_exec_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# --- Task Definition ---
+# -- Task Definition --
 resource "aws_ecs_task_definition" "hello_task" {
   family                   = "${var.project_name}-task"
   network_mode             = "awsvpc"
@@ -57,7 +62,7 @@ resource "aws_ecs_task_definition" "hello_task" {
   ])
 }
 
-# --- ECS Service ---
+# -- ECS Service --
 resource "aws_ecs_service" "hello_service" {
   name            = "${var.project_name}-service"
   cluster         = aws_ecs_cluster.hello_cluster.id
@@ -72,16 +77,6 @@ resource "aws_ecs_service" "hello_service" {
   }
 }
 
-# --- Outputs ---
-output "cluster_name" {
-  description = "ECS Cluster name"
-  value       = aws_ecs_cluster.hello_cluster.name
-}
-
-output "service_name" {
-  description = "ECS Service name"
-  value       = aws_ecs_service.hello_service.name
-}
 # -- Export ECS Task Definition JSON --
 resource "local_file" "ecs_task_def_json" {
   filename = "${path.module}/../../.aws/task-definition.json"

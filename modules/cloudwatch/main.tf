@@ -1,5 +1,10 @@
 resource "aws_sns_topic" "alarm_topic" {
   name = "${var.project_name}-alarm-topic"
+ 
+  tags = {
+    Name        = "hello-world-bucket"
+    Environment = "demo"
+  }
 }
 
 resource "aws_sns_topic_subscription" "email_subscription" {

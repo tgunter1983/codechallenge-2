@@ -1,6 +1,10 @@
 # --- ECS Verification ---
 data "aws_ecs_cluster" "verify" {
   cluster_name = var.cluster_name
+  tags = {
+    Name        = "hello-world-bucket"
+    Environment = "demo"
+  }
 }
 
 data "aws_ecs_task_definition" "verify" {

@@ -72,7 +72,7 @@ module "cloudwatch" {
   source         = "./modules/cloudwatch"
   project_name   = var.project_name
   cluster_name   = module.ecs.cluster_name
-  alarm_email    = "timwgutner@outlook.com"
+  alarm_email    = "timwgunter@outlook.com"
 }
 
 # -- Test Module --
