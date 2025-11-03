@@ -105,22 +105,7 @@ terraform-ecs-hello-world/
 ├── variables.tf      
 ├── outputs.tf 
 ├── modules/
-│   ├── cloudwatch/
-│   │    ├── main.tf
-│   │    ├── variables.tf 
-│   │    └── outputs.tf
-│   ├── ecs/
-│   │    ├── main.tf
-│   │    └── variables.tf 
-│   ├── s3/
-│   │    ├── main.tf
-│   │    └── outputs.tf
-│   └── verify/
-│       ├── main.tf
-│       └── variables.tf 
-│
 ├── tests/              
-│   └── verify.tftest.hcl
 └── README.md
 
 
