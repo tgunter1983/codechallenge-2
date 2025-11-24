@@ -1,0 +1,28 @@
+    name: Destroy AWS Infrastructure
+
+    on:
+      workflow_dispatch: # Allows manual triggering from the GitHub Actions UI
+
+    jobs:
+      terraform_destroy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Configure AWS Credentials
+            uses: aws-actions/configure-aws-credentials@v4
+            with:
+              role-to-assume: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/GitHubActionsRole # Replace with your IAM Role ARN
+              aws-region: us-east-1 # Replace with your desired AWS region
+
+          - name: Setup Terraform
+            uses: hashicorp/setup-terraform@v3
+
+          - name: Terraform Init
+            run: terraform init -input=false
+
+          - name: Terraform Destroy
+            run: terraform destroy -auto-approve
+            env:
+              TF_VAR_YOUR_VARIABLE: YOUR_VALUE # Pass any necessary Terraform variables
